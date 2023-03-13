@@ -16,7 +16,7 @@ app.use("/users",userRouter) //url--https://localhost:5000/users/signup,
 
 const port=5000;
 
-const mongo_url="mongodb+srv://ankit:ankit12345@cluster0.ojralhz.mongodb.net/tour_db?retryWrites=true&w=majority"
+const mongo_url="mongodb://localhost:27017"
 mongoose.connect(mongo_url).then(()=>{
     app.listen(port,()=>{
         console.log(`server connect with port ${port}`)

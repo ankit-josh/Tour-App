@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs"
 import UserModal from "../models/user.js"
 import  jwt  from "jsonwebtoken"
 
-const secret="test"
+const secret="tour-db"
 
 export const signin=async(req,res)=>{
 
