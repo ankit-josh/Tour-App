@@ -4,6 +4,7 @@ import morgan from "morgan";
 import cors from "cors"
 import userRouter from "./routes/user.js"
 import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+import tourRouter from "./routes/tour.js"
 dotenv.config()
 const app=express()
 
@@ -14,7 +15,7 @@ app.use(express.urlencoded({limit:"50mb",extended:true}))
 app.use(cors())
 app.use("/users",userRouter) //url--https://localhost:5000/users/signup,
                                     //https://localhost:5000/users/signup
-
+app.use("/tour",tourRouter) //url== https://localhost:5000/tour/createtour
 const port=process.env.SERVER_PORT;
 
 const mongo_url=process.env.MONGO_URL
