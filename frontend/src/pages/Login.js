@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Link,useNavigate } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import { toast } from "react-toastify";
 import {
     MDBCard,
     MDBCardBody,
@@ -10,6 +12,7 @@ import {
     MDBIcon,
     MDBSpinner,
   } from "mdb-react-ui-kit";
+import { login } from '../redux/feature/AuthSlice';
 
   const initialState ={
     email:"",
@@ -19,11 +22,24 @@ import {
 
 const Login = () => {
 
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
+
     const [formValue,setFormValue]=useState(initialState)
+    const { loading, error } = useSelector((state) => ({ ...state.auth }));
     const {email,password}=formValue
+
+    useEffect(() => {
+      error && toast.error(error)
+    }, [error])
+    
 
     const handleSubmit=(e)=>{
         e.preventDefault()
+        if (email && password){
+            dispatch(login({formValue,toast,navigate}))
+        }
+        
     }
 
     const onInputChange=(event)=>{
@@ -73,7 +89,14 @@ const Login = () => {
             </div>
             <div className="col-12">
               <MDBBtn style={{ width: "100%" }} className="mt-2">
-                
+              {loading && (
+                  <MDBSpinner
+                    size="sm"
+                    role="status"
+                    tag="span"
+                    className="me-2"
+                  />
+                )}
                 Login
               </MDBBtn>
             </div>
@@ -82,7 +105,7 @@ const Login = () => {
           
         </MDBCardBody>
         <MDBCardFooter>
-          <Link to="/register">
+          <Link to="/signup">
             <p>Don't have an account ? Sign Up</p>
           </Link>
         </MDBCardFooter>
