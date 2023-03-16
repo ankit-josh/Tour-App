@@ -13,6 +13,8 @@ import {
   import FileBase from "react-file-base64";
   import { toast } from "react-toastify";
   import { useNavigate, useParams } from "react-router-dom";
+  import { useDispatch,useSelector } from 'react-redux';
+  import { createTour } from '../redux/feature/TourSlice'; 
 
   const initialState={
     title:"",
@@ -21,12 +23,20 @@ import {
   }
 
 const AddEditTour = () => {
-
+    const navigate=useNavigate()
+    const dispatch=useDispatch()
+    const {user}=useSelector((state) => ({ ...state.auth }));
     const [tourData,setTourData]=useState(initialState)
     const {title,description,tags}=tourData
 
+    
     const handleSubmit=(e)=>{
         e.preventDefault()
+        if (title && description && tags){
+            const updateTourData={...tourData,name:user?.result?.name}
+            dispatch(createTour({updateTourData,toast,navigate}))
+            handleClear()
+        }
     }
 
     const onInputChange=(e)=>{

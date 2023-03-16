@@ -29,3 +29,16 @@ export const getTours=async(req,res)=>{
     }
     
 }
+
+export const getTour = async (req, res) => {
+    const { id } = req.params
+    
+    try {
+      const tour = await tourModal.findById(id)
+   
+      res.status(200).json(tour);
+    } catch (error) {
+      res.status(404).json({ message: "Something went wrong" });
+    }
+  };
+  

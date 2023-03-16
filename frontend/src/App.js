@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { setUser } from './redux/feature/AuthSlice';
 import Header from './components/Header';
 import AddEditTour from './pages/AddEditTour';
+import SingleTour from './pages/SingleTour';
 
 function App() {
 
@@ -31,6 +32,7 @@ useEffect(()=>{
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/addtour" element={<AddEditTour/>}/>
             <Route path="/addTour/:id" element={<AddEditTour/>}/>
+            <Route path="/tour/:id" element={<SingleTour/>}/>
           </Routes>
         </div>
     </BrowserRouter>

@@ -15,7 +15,7 @@ app.use(express.urlencoded({limit:"50mb",extended:true}))
 app.use(cors())
 app.use("/users",userRouter) //url--https://localhost:5000/users/signup,
                                     //https://localhost:5000/users/signup
-app.use("/tour",tourRouter) //url== https://localhost:5000/tour/createtour
+app.use("/tour",tourRouter) //url== https://localhost:5000/tour/createTour
 const port=process.env.SERVER_PORT;
 
 const mongo_url=process.env.MONGO_URL
