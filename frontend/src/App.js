@@ -12,6 +12,8 @@ import { setUser } from './redux/feature/AuthSlice';
 import Header from './components/Header';
 import AddEditTour from './pages/AddEditTour';
 import SingleTour from './pages/SingleTour';
+import Dashboard from './pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
@@ -30,9 +32,37 @@ useEffect(()=>{
             <Route path="/" element={<Home/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/>
-            <Route path="/addtour" element={<AddEditTour/>}/>
-            <Route path="/addTour/:id" element={<AddEditTour/>}/>
+
+            <Route path="/addtour" 
+            element={
+              <PrivateRoute>
+                <AddEditTour/>
+              </PrivateRoute>
+            }
+            />
+            <Route path="/addTour/:id" 
+              element={
+              <PrivateRoute>
+                <AddEditTour/>
+              </PrivateRoute>
+            }
+            />
+            <Route path="/editTour/:id" 
+              element={
+              <PrivateRoute>
+                <AddEditTour/>
+              </PrivateRoute>
+            }
+            />
             <Route path="/tour/:id" element={<SingleTour/>}/>
+
+            <Route path="/dashboard" 
+              element={
+              <PrivateRoute>
+                <Dashboard/>
+              </PrivateRoute>
+            }
+            />
           </Routes>
         </div>
     </BrowserRouter>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     MDBCard,
     MDBCardBody,
@@ -14,7 +14,7 @@ import {
   import { toast } from "react-toastify";
   import { useNavigate, useParams } from "react-router-dom";
   import { useDispatch,useSelector } from 'react-redux';
-  import { createTour } from '../redux/feature/TourSlice'; 
+  import { createTour, updateTour } from '../redux/feature/TourSlice'; 
 
   const initialState={
     title:"",
@@ -23,18 +23,37 @@ import {
   }
 
 const AddEditTour = () => {
+
+    const {id}=useParams()
     const navigate=useNavigate()
     const dispatch=useDispatch()
     const {user}=useSelector((state) => ({ ...state.auth }));
+    const {userTours}=useSelector((state) => ({ ...state.tour }));
     const [tourData,setTourData]=useState(initialState)
     const {title,description,tags}=tourData
 
     
+    useEffect(()=>{
+      if (id){
+        const singleTour=userTours.find((tour)=>tour._id===id)
+        console.log(singleTour)
+        setTourData({...singleTour})
+      }
+    },[id])
+
     const handleSubmit=(e)=>{
         e.preventDefault()
         if (title && description && tags){
             const updateTourData={...tourData,name:user?.result?.name}
-            dispatch(createTour({updateTourData,toast,navigate}))
+
+            if (!id){
+              dispatch(createTour({updateTourData,toast,navigate}))
+            }
+
+            else{
+              dispatch(updateTour({updateTourData,toast,navigate,id}))
+            }
+            
             handleClear()
         }
     }
@@ -71,7 +90,7 @@ const AddEditTour = () => {
       }}
     >
      <MDBCard alignment="center">
-        <h5>Add Tour</h5>
+        <h5>{id ? "Update Tour" : "Add Tour"}</h5>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} className="row g-3" noValidate>
             <div className="col-md-12">
@@ -129,7 +148,7 @@ const AddEditTour = () => {
                 className="mt-2"
                 color="success"
                 >
-                Submit
+                {id ? "Update" : "Submit"}
               </MDBBtn>
               <MDBBtn
                 style={{ width: "100%" }}
